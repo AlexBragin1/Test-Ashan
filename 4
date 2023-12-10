@@ -1,0 +1,22 @@
+# sudo apt-get install nginx
+# sudo systemctl status nginx
+# sudo systemctl start nginx
+# ln /etc/nginx/sites-available/mySite.conf 
+# 
+#insert in file .conf 
+
+server {
+    listen 12000 ssl;
+    server_name server1 server1.nodomain.org;
+
+    ssl_certificate /.../.../name.crt;
+    ssl_certificate_key /.../../name.key;
+
+    location / {
+        allow 10.10.10.1;
+        deny all;
+        auth_basic "Restricted Access";
+        auth_basic_user_file /.../pass
+        
+    }
+}

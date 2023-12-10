@@ -1,0 +1,8 @@
+sudo su
+#passw
+ iptables -F
+ iptables -A INPUT -p tcp --dport 22 -s 192.168.11.0/24 -j ACCEPT
+ iptables -A INPUT -p tcp -s 10.10.10.0/16 -m multiport --dports 22,2377,7946,4789 -j ACCEPT
+ iptables -A INPUT -j DROP
+tee /etc/iptables/rules.v4
+#save 

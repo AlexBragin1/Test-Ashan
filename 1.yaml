@@ -1,0 +1,13 @@
+# sudo apt-get install ifenslave
+# sudo nano /etc/netplan/Mybond.yaml
+---
+
+network:
+  version: 2
+  bonds:
+    bond0:
+      interfaces: [ens18, ens19]  
+      addresses: [192.168.2.2/22]  
+      parameters:
+        mode: 802.3ad
+        lacp-rate: fast

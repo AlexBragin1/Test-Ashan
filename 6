@@ -1,0 +1,6 @@
+curl -u user1:1resu -XGET "https://10.10.10.1:9092/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "ids": {
+      "values": ["fafdADFasdfq34t"]
+    }
+  }

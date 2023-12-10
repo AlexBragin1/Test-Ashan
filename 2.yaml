@@ -1,0 +1,41 @@
+---
+- name: Change user password, create user1 and user2, and change SSH port
+  hosts: your_server
+  become: true
+  tasks:
+    - name: Change user1 password
+      user:
+        name: user1
+        password: "{{ '1resu' | password_hash('sha512') }}"
+
+    - name: Create user2
+      user:
+        name: user2
+        uid: 5000
+        home: /tmp/user2
+        password: "{{ '2resu' | password_hash('sha512') }}"
+
+    - name: Change SSH port 
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^Port"
+        line: "Port 2022"
+        backup: yes
+      notify:
+        - restart ssh
+
+    - name: Change SSH port 
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^Port"
+        line: "Port 2022"
+        backup: yes
+      when: "'ens18' in ansible_interfaces and ansible_default_ipv4.interface == 'ens18' or ansible_default_ipv4.interface == 'lo' or ansible_default_ipv6.interface == 'ens18'"
+      notify:
+        - restart ssh
+
+  handlers:
+    - name: restart ssh
+      service:
+        name: sshd
+        state: restarted
